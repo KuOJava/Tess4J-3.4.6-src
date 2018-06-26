@@ -63,7 +63,8 @@ public class Tess {
 //            		System.out.println(img);
             		ITesseract instance = new Tesseract();  // JNA Interface Mapping    
 //                     ITesseract instance = new Tesseract1(); // JNA Direct Mapping  
-            		//代码的文件夹被修改
+            		//代码的文件夹被
+            		//原本的请使用你们的路径
             		instance.setDatapath("D:\\EclipseWold\\Tess4J-3.4.6-src\\Tess4J\\tessdata");
             		instance.setLanguage("chi_sim");//添加中文字库   
             		try {    
