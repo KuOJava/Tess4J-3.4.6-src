@@ -62,7 +62,8 @@ public class Tess {
 //            		img = ImageHelper.getScaledInstance(img, img.getHeight() * 2, img.getWidth() * 2);
 //            		System.out.println(img);
             		ITesseract instance = new Tesseract();  // JNA Interface Mapping    
-//                     ITesseract instance = new Tesseract1(); // JNA Direct Mapping   
+//                     ITesseract instance = new Tesseract1(); // JNA Direct Mapping  
+            		//代码的文件夹被修改
             		instance.setDatapath("D:\\EclipseWold\\Tess4J-3.4.6-src\\Tess4J\\tessdata");
             		instance.setLanguage("chi_sim");//添加中文字库   
             		try {    
