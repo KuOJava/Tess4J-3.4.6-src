@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.event.AncestorListener;
 
 //这是主函数，图形用户界面编写在这里
 public class Main {
@@ -145,7 +146,8 @@ public class Main {
 		contentPane.add(showMessage, c);
 
 		// '点击进入输出的Excel的根目录'
-		jumpToExcel = new JLabel("点击进入输出的Excel的根目录");
+		jumpToExcel = new JLabel("点击打开输出的Excel");
+		//点击事件
 		c.gridx = 0;
 		c.gridy = 4;
 		c.gridwidth = 3;
@@ -155,7 +157,16 @@ public class Main {
 		contentPane.add(jumpToExcel, c);
 
 		// '点击复制文件'
-		clickToCopy = new JButton("点击复制文件");
+		clickToCopy = new JButton("打开文件");
+		//打开文件
+		clickToCopy.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				StartExcel startexcel=new StartExcel();
+				startexcel.start();//自动打开Excel表格
+			}
+		});
 		c.gridx = 3;
 		c.gridwidth = 2;
 		c.weightx = 2;
@@ -163,7 +174,7 @@ public class Main {
 		contentPane.add(clickToCopy, c);
 		// 显示窗口
 		f.pack();
-		f.setSize(800, 1000);
+		f.setSize(800, 900);
 		f.setVisible(true);
 	}
 
