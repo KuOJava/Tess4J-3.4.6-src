@@ -7,7 +7,7 @@ public class StartExcel{
 	public static void start( )
 	{
 		
-		String cmd = "cmd /C e:\\POI_test.xls";
+		String cmd = "cmd /C D:\\POI_test.xls";
 		Process p;
 		try {
 			p = Runtime.getRuntime().exec(cmd);
