@@ -20,24 +20,24 @@ public class Tess {
      static  String h=null;
   
      static int depth=1;  
-    
+     static int count = 0;
     
   /***遍历指定文件读取读取图片****/    
-    public static void find(String pathName,int depth) throws IOException{  
+    public static String find(String pathName,int depth) throws IOException{  
         int filecount=0;  
         //获取pathName的File对象  
         File dirFile = new File(pathName);  
         //判断该文件或目录是否存在，不存在时在控制台输出提醒  
         if (!dirFile.exists()) {  
             System.out.println("do not exit");  
-            return ;  
+            return "不存在该文件夹";  
         }  
         //判断如果不是一个目录，就判断是不是一个文件，时文件则输出文件路径  
         if (!dirFile.isDirectory()) {  
             if (dirFile.isFile()) {  
                 System.out.println(dirFile.getCanonicalFile());  
             }  
-            return ;  
+            return "不是文件夹";  
         }  
         //获取此目录下的所有文件名与目录名  
         String[] fileList = dirFile.list();  
@@ -116,12 +116,14 @@ public class Tess {
             				temp2.add("none");
             			//	System.out.println(classify[i]); 
             			System.out.println(result);    
+            			Main.showMessage.setText(result+"\n"+"已经识别出:"+(++count)+"张");
             		} catch (TesseractException e) {    
             			System.err.println(e.getMessage());    
             		} 
             	}
             }  
         }  
+        return "完成";
     }  
       
    /* public static void main(String[] args) throws IOException{  

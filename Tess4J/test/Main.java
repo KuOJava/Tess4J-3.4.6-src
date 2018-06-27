@@ -19,7 +19,7 @@ public class Main {
 	private JButton choosePath;
 	private JButton confirm;
 	private JLabel situation;
-	private JTextArea showMessage;
+	public static JTextArea showMessage;
 	private JLabel jumpToExcel;
 	private JButton clickToCopy;
 
@@ -98,15 +98,17 @@ public class Main {
 							@Override
 							public void run() {
 								// TODO Auto-generated method stub
+								String message="";
 								try {
-									Tess.find(path, Tess.depth);
+									message = Tess.find(path, Tess.depth);
+									
 								} catch (IOException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
 								PoiExcel poiexcel = new PoiExcel();
 								poiexcel.poi(Tess.temp1, Tess.temp2);// 生成Excel表格
-								showMessage.setText("识别完成");
+								showMessage.setText(message);
 							}
 						}).start();
 
@@ -161,7 +163,7 @@ public class Main {
 		contentPane.add(clickToCopy, c);
 		// 显示窗口
 		f.pack();
-		f.setSize(800, 400);
+		f.setSize(800, 1000);
 		f.setVisible(true);
 	}
 
