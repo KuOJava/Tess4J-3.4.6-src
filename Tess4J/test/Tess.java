@@ -19,7 +19,7 @@ public class Tess {
      static boolean tem4=false;
      static  String h=null;
   
-    private static int depth=1;  
+     static int depth=1;  
     
     
   /***遍历指定文件读取读取图片****/    
@@ -124,11 +124,11 @@ public class Tess {
         }  
     }  
       
-    public static void main(String[] args) throws IOException{  
+   /* public static void main(String[] args) throws IOException{  
         find("././b", depth);  //遍历图片，提取指定内容，这里是图片相对位置的存储路径不需要修改
   	    PoiExcel poiexcel=new PoiExcel();
 	    poiexcel.poi(temp1,temp2);//生成Excel表格
 		StartExcel startexcel=new StartExcel();
 	    startexcel.start();//自动打开Excel表格
-    }  
+    }  */
 }  
