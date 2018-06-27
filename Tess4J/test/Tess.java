@@ -19,25 +19,25 @@ public class Tess {
      static boolean tem4=false;
      static  String h=null;
   
-    private static int depth=1;  
-    
+     static int depth=1;  
+     static int count = 0;
     
   /***遍历指定文件读取读取图片****/    
-    public static void find(String pathName,int depth) throws IOException{  
+    public static String find(String pathName,int depth) throws IOException{  
         int filecount=0;  
         //获取pathName的File对象  
         File dirFile = new File(pathName);  
         //判断该文件或目录是否存在，不存在时在控制台输出提醒  
         if (!dirFile.exists()) {  
             System.out.println("do not exit");  
-            return ;  
+            return "不存在该文件夹";  
         }  
         //判断如果不是一个目录，就判断是不是一个文件，时文件则输出文件路径  
         if (!dirFile.isDirectory()) {  
             if (dirFile.isFile()) {  
                 System.out.println(dirFile.getCanonicalFile());  
             }  
-            return ;  
+            return "不是文件夹";  
         }  
         //获取此目录下的所有文件名与目录名  
         String[] fileList = dirFile.list();  
@@ -63,7 +63,8 @@ public class Tess {
 //            		System.out.println(img);
             		ITesseract instance = new Tesseract();  // JNA Interface Mapping    
 //                     ITesseract instance = new Tesseract1(); // JNA Direct Mapping  
-            		//代码的文件夹被修改
+            		//代码的文件夹被
+            		//原本的请使用你们的路径
             		instance.setDatapath("D:\\EclipseWold\\Tess4J-3.4.6-src\\Tess4J\\tessdata");
             		instance.setLanguage("chi_sim");//添加中文字库   
             		try {    
@@ -115,19 +116,21 @@ public class Tess {
             				temp2.add("none");
             			//	System.out.println(classify[i]); 
             			System.out.println(result);    
+            			Main.showMessage.setText(result+"\n"+"已经识别出:"+(++count)+"张");
             		} catch (TesseractException e) {    
             			System.err.println(e.getMessage());    
             		} 
             	}
             }  
         }  
+        return "完成";
     }  
       
-    public static void main(String[] args) throws IOException{  
+   /* public static void main(String[] args) throws IOException{  
         find("././b", depth);  //遍历图片，提取指定内容，这里是图片相对位置的存储路径不需要修改
   	    PoiExcel poiexcel=new PoiExcel();
 	    poiexcel.poi(temp1,temp2);//生成Excel表格
 		StartExcel startexcel=new StartExcel();
 	    startexcel.start();//自动打开Excel表格
-    }  
+    }  */
 }  
