@@ -1,10 +1,14 @@
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 
 import javax.swing.JButton;
@@ -13,7 +17,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.event.AncestorListener;
 
 //这是主函数，图形用户界面编写在这里
 public class Main {
@@ -45,7 +48,7 @@ public class Main {
 		// '输入路径'的文本框
 		inputPath = new JTextField(1);
 		inputPath.setText("././b");
-		inputPath.setFont(new Font("宋体",Font.PLAIN, 80));
+		inputPath.setFont(new Font("宋体", Font.PLAIN, 80));
 		// 第一行第一列开始
 		c.gridx = 0;
 		c.gridy = 0;
@@ -62,7 +65,7 @@ public class Main {
 
 		// '选择路径'按钮
 		choosePath = new JButton("选择路径");
-		choosePath.setFont(new Font("宋体",Font.PLAIN, 50));
+		choosePath.setFont(new Font("宋体", Font.PLAIN, 50));
 		// 选择路径点击事件
 		choosePath.addActionListener(new ActionListener() {
 
@@ -87,38 +90,38 @@ public class Main {
 		contentPane.add(choosePath, c);
 		// '确定'按钮
 		confirm = new JButton("确定");
-		confirm.setFont(new Font("宋体",Font.PLAIN, 50));
+		confirm.setFont(new Font("宋体", Font.PLAIN, 50));
 		// 确定按钮的点击事件
 		confirm.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// 点击后获取路径读取内容
-					String path = inputPath.getText();
-					if (path.equals("")) {
-						showMessage.setText("你没有输入任何路径\n");
-					} else {
-						showMessage.setText("正在识别。。。。。。");
-						new Thread(new Runnable() {
+				String path = inputPath.getText();
+				if (path.equals("")) {
+					showMessage.setText("你没有输入任何路径\n");
+				} else {
+					showMessage.setText("正在识别。。。。。。");
+					new Thread(new Runnable() {
 
-							@Override
-							public void run() {
-								// TODO Auto-generated method stub
-								String message="";
-								try {
-									message = Tess.find(path, Tess.depth);
-									
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-								PoiExcel poiexcel = new PoiExcel();
-								poiexcel.poi(Tess.temp1, Tess.temp2);// 生成Excel表格
-								showMessage.setText(message);
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							String message = "";
+							try {
+								message = Tess.find(path, Tess.depth);
+
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
 							}
-						}).start();
+							PoiExcel poiexcel = new PoiExcel();
+							poiexcel.poi(Tess.temp1, Tess.temp2);// 生成Excel表格
+							showMessage.setText(message);
+						}
+					}).start();
 
-					}
+				}
 			}
 		});
 		c.gridx = 4;
@@ -131,7 +134,7 @@ public class Main {
 
 		// '识别情况:'提示框
 		situation = new JLabel("识别情况:");
-		situation.setFont(new Font("宋体",Font.PLAIN, 50));
+		situation.setFont(new Font("宋体", Font.PLAIN, 50));
 		c.gridx = 0;
 		c.gridy = 1;
 		c.weightx = 1;
@@ -142,7 +145,7 @@ public class Main {
 
 		// '显示消息的框'
 		showMessage = new JTextArea("");
-		showMessage.setFont(new Font("宋体",Font.PLAIN, 50));
+		showMessage.setFont(new Font("宋体", Font.PLAIN, 50));
 		showMessage.setSize(200, 200);
 		// c.gridx=0;
 		c.gridy = 2;
@@ -154,8 +157,8 @@ public class Main {
 
 		// '点击进入输出的Excel的根目录'
 		jumpToExcel = new JLabel("点击打开输出的Excel");
-		jumpToExcel.setFont(new Font("宋体",Font.PLAIN, 50));
-		//点击事件
+		jumpToExcel.setFont(new Font("宋体", Font.PLAIN, 50));
+		// 点击事件
 		c.gridx = 0;
 		c.gridy = 4;
 		c.gridwidth = 3;
@@ -166,14 +169,14 @@ public class Main {
 
 		// '点击复制文件'
 		clickToCopy = new JButton("打开文件");
-		clickToCopy.setFont(new Font("宋体",Font.PLAIN, 50));
-		//打开文件
+		clickToCopy.setFont(new Font("宋体", Font.PLAIN, 50));
+		// 打开文件
 		clickToCopy.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				StartExcel startexcel=new StartExcel();
-				startexcel.start();//自动打开Excel表格
+				StartExcel startexcel = new StartExcel();
+				startexcel.start();// 自动打开Excel表格
 			}
 		});
 		c.gridx = 3;
@@ -181,10 +184,61 @@ public class Main {
 		c.weightx = 2;
 		c.weighty = 1;
 		contentPane.add(clickToCopy, c);
+
 		// 显示窗口
 		f.pack();
-		f.setSize(1200, 900);
+		//居中显示
+		int width =1200;
+		int height = 900;
+		Point point = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
+		f.setBounds(point.x-width/2, point.y-height/2, width, height);
+		//f.setSize(1200, 900);
 		f.setVisible(true);
+		// 设置窗口的关闭
+		f.addWindowListener(new WindowListener() {
+
+			@Override
+			public void windowOpened(WindowEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void windowIconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				// TODO Auto-generated method stub
+				System.exit(0);
+			}
+
+			@Override
+			public void windowClosed(WindowEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void windowActivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 
 	public static void main(String[] args) {
