@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Label;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,20 +12,22 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
 
+import javax.security.auth.login.CredentialExpiredException;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 //这是主函数，图形用户界面编写在这里
 public class Main {
-	JTextField inputPath;
+	private JTextField inputPath;
 	private JButton choosePath;
 	private JButton confirm;
 	private JLabel situation;
-	public static JTextArea showMessage;
+	public static JTextField showMessage;
 	private JLabel jumpToExcel;
 	private JButton clickToCopy;
 
@@ -49,6 +52,7 @@ public class Main {
 		inputPath = new JTextField(1);
 		inputPath.setText("././b");
 		inputPath.setFont(new Font("宋体", Font.PLAIN, 80));
+		inputPath.setHorizontalAlignment(JTextField.CENTER);
 		// 第一行第一列开始
 		c.gridx = 0;
 		c.gridy = 0;
@@ -97,30 +101,32 @@ public class Main {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// 点击后获取路径读取内容
+				Long start = System.nanoTime();
 				String path = inputPath.getText();
 				if (path.equals("")) {
 					showMessage.setText("你没有输入任何路径\n");
 				} else {
 					showMessage.setText("正在识别。。。。。。");
-					new Thread(new Runnable() {
-
+					Thread thread =new Thread(new Runnable() {
 						@Override
 						public void run() {
-							// TODO Auto-generated method stub
 							String message = "";
 							try {
 								message = Tess.find(path, Tess.depth);
-
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 							PoiExcel poiexcel = new PoiExcel();
 							poiexcel.poi(Tess.temp1, Tess.temp2);// 生成Excel表格
 							showMessage.setText(message);
+							if(message.equals("完成")) {
+								Long end = System.nanoTime();
+								System.out.println("时间："+(end-start)+"纳秒");
+								System.out.println("速度："+(end-start)/Tess.count+"纳秒/张"+"\t或\t"+(end-start)/Tess.count/1000000+"毫秒/张");
+							}
 						}
-					}).start();
-
+					});
+					thread.start();
 				}
 			}
 		});
@@ -135,18 +141,19 @@ public class Main {
 		// '识别情况:'提示框
 		situation = new JLabel("识别情况:");
 		situation.setFont(new Font("宋体", Font.PLAIN, 50));
+		situation.setHorizontalAlignment(SwingConstants.CENTER);
 		c.gridx = 0;
 		c.gridy = 1;
 		c.weightx = 1;
 		c.weighty = 1;
-		// c.gridwidth=1;----不用赋值
-		// c.gridheight=1;----不用赋值
+		c.gridwidth=5;
+		c.gridheight=1;
 		contentPane.add(situation, c);
 
 		// '显示消息的框'
-		showMessage = new JTextArea("");
+		showMessage = new JTextField("");
 		showMessage.setFont(new Font("宋体", Font.PLAIN, 50));
-		showMessage.setSize(200, 200);
+		showMessage.setHorizontalAlignment(JTextField.CENTER);
 		// c.gridx=0;
 		c.gridy = 2;
 		c.gridwidth = 5;
@@ -156,8 +163,9 @@ public class Main {
 		contentPane.add(showMessage, c);
 
 		// '点击进入输出的Excel的根目录'
-		jumpToExcel = new JLabel("点击打开输出的Excel");
+		jumpToExcel = new JLabel("点击打开输出的Excel:");
 		jumpToExcel.setFont(new Font("宋体", Font.PLAIN, 50));
+		jumpToExcel.setHorizontalAlignment(SwingConstants.CENTER);
 		// 点击事件
 		c.gridx = 0;
 		c.gridy = 4;

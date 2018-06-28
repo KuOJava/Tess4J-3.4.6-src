@@ -9,6 +9,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import LSD.LSD;
 import LSD.Line;
@@ -90,8 +93,8 @@ public class Tess {
             			int x = img.getWidth();
             			int y = img.getHeight();
             			max_x1=x;
-            			System.out.println(x);
-            			System.out.println(y);
+            			//System.out.println(x);
+            			//System.out.println(y);
             		
             			HashSet<Line> lines = new HashSet<Line>();
 
@@ -100,7 +103,7 @@ public class Tess {
 
             			double [] arr2 = new double[x*y];
             		
-            			System.out.println("arr.length:"+arr.length);
+            			//System.out.println("arr.length:"+arr.length);
             			int c=0;
             			for(int i1 = 0; i1 < arr.length-3; i1+=3) {
             				double B = arr[i1];
@@ -121,14 +124,14 @@ public class Tess {
             						out[7 * i1 + 2], out[7 * i1 + 3]));
 
             			}
-            			
+            		
             			
             			int z=0;
-            			System.out.println("开始");
+            			//System.out.println("开始");
             			for (Line l : lines) {
             				if((l.x2-l.x1>x/8)&&(l.y1>min_y11)&&(l.y1<y/2)&&(Math.abs(l.y1-l.y2)<10))
             				{
-            					System.out.println("true");
+            					//System.out.println("true");
             					min_x11=l.x1;
             					min_x22=l.x2;
             					min_y11=l.y1;
@@ -136,7 +139,7 @@ public class Tess {
             				}
             				if((l.x2-l.x1>x/8)&&(l.y1<max_y11)&&(l.y1>y/2)&&(Math.abs(l.y1-l.y2)<10))
             				{
-            					System.out.println("true");
+            					//System.out.println("true");
             					max_x11=l.x1;
             					max_x22=l.x2;
             					max_y11=l.y1;
@@ -146,12 +149,14 @@ public class Tess {
             				
             				if(l.x2-l.x1>x/8)
             				{	
-            				System.out.println(l.y2-l.y1);
-            				System.out.println(l.x1);
-            				System.out.println(l.x2);
-            				System.out.println(l.y1);
-            				System.out.println(l.y2);
-            				System.out.println(++z);}
+            					++z;
+//            				System.out.println(l.y2-l.y1);
+//            				System.out.println(l.x1);
+//            				System.out.println(l.x2);
+//            				System.out.println(l.y1);
+//            				System.out.println(l.y2);
+//            				System.out.println(z);
+            				}
             				if((l.y2-l.y1>y/8)&&(l.x1>min_x1)&&(l.x1<x/2)&&(Math.abs(l.x1-l.x2)<10))
             				{
             					min_x1=l.x1;
@@ -176,12 +181,16 @@ public class Tess {
             			//g2d.drawLine((int)min_x1,(int)min_y1,(int)min_x2,(int)min_y2);
             			g2d.drawLine((int)min_x11,(int)min_y11,(int)min_x22,(int)min_y22);
             		
-            			System.out.println(max_x1+" "+min_x1+" "+min_y11);
-            			System.out.println(x/2);
-            			System.out.println(y/8);
-            			System.out.println("结束");
-            			System.out.println(lines.size());
+//            			System.out.println(max_x1+" "+min_x1+" "+min_y11);
+//            			System.out.println(x/2);
+//            			System.out.println(y/8);
+//            			System.out.println("结束");
+//            			System.out.println(lines.size());
             			img=img.getSubimage((int)min_x1,(int)min_y11,(int)(max_x1-min_x1),(int)(y-min_y11));
+            			//显示被切割的图片
+//            			JFrame jFrame = new JFrame("");
+//            			jFrame.add(new JLabel(new ImageIcon(img)));
+//            			jFrame.setVisible(true);
             		}
             		shadow shadows=new shadow();
             		try {    
@@ -239,7 +248,7 @@ public class Tess {
             			//	System.out.println(classify[i]);     
             			Main.showMessage.setText("已经识别出:"+(++count)+"张");
             		} catch (Exception e) {    
-            			System.err.println(e.getMessage());    
+            			//System.err.println(e.getMessage());    
             		} 
             	}
             }  
