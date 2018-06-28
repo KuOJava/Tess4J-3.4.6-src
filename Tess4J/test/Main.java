@@ -43,6 +43,7 @@ public class Main {
 
 		// '输入路径'的文本框
 		inputPath = new JTextField(1);
+		inputPath.setText("././b");
 		// 第一行第一列开始
 		c.gridx = 0;
 		c.gridy = 0;
