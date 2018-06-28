@@ -71,6 +71,7 @@ public class Tess {
             			double max_x2=0;
             			double max_y1=0;
             			double max_y2=0;
+            			
             			double min_x1=0;
             			double min_x2=0;
             			double min_y1=0;
@@ -80,6 +81,11 @@ public class Tess {
             			double min_x22=0;
             			double min_y11=0;
             			double min_y22=0;
+            			
+            			double max_x11=0;
+            			double max_x22=0;
+            			double max_y11=0;
+            			double max_y22=0;
             			Graphics2D g2d = img.createGraphics();
             			int x = img.getWidth();
             			int y = img.getHeight();
@@ -128,6 +134,16 @@ public class Tess {
             					min_y11=l.y1;
             					min_y22=l.y2;
             				}
+            				if((l.x2-l.x1>x/8)&&(l.y1<max_y11)&&(l.y1>y/2)&&(Math.abs(l.y1-l.y2)<10))
+            				{
+            					System.out.println("true");
+            					max_x11=l.x1;
+            					max_x22=l.x2;
+            					max_y11=l.y1;
+            					max_y22=l.y2;
+            				}
+            				
+            				
             				if(l.x2-l.x1>x/8)
             				{	
             				System.out.println(l.y2-l.y1);
@@ -165,67 +181,64 @@ public class Tess {
             			System.out.println(y/8);
             			System.out.println("结束");
             			System.out.println(lines.size());
-            			img=img.getSubimage((int)min_x1,(int)min_y11,(int)(max_x1-min_x1),(int)(y*2/3));
+            			img=img.getSubimage((int)min_x1,(int)min_y11,(int)(max_x1-min_x1),(int)(y-min_y11));
             		}
-//            		img = ImageHelper.getScaledInstance(img, img.getHeight() * 2, img.getWidth() * 2);
-//            		System.out.println(img);
-            		ITesseract instance = new Tesseract();  // JNA Interface Mapping    
-//                     ITesseract instance = new Tesseract1(); // JNA Direct Mapping  
-            		//代码的文件夹被
-            		//原本的请使用你们的路径
-            		instance.setDatapath("D:\\EclipseWold\\Tess4J-3.4.6-src\\Tess4J\\tessdata");
-            		instance.setLanguage("chi_sim");//添加中文字库   
+            		shadow shadows=new shadow();
             		try {    
-            			String result =instance.doOCR(img) ;
-            			String [] classify=result.split("/n");
-            			
+            			String result =shadows.ocr(img) ;            			
+            			String [] classify0=result.split("\n");
+            			String [] classify=new String[classify0.length];
+            			for(int j=0;j<classify0.length;j++) {
+            				classify[j]="";
+            				char[] a=classify0[j].toCharArray();
+            				for(int k=0;k<classify0[j].length();k++) {
+            					if(a[k]!=' ') {
+            						classify[j]+=a[k];
+            					}
+            				}
+            			}
             			for(int i1=0;i1<classify.length;i1++)
             			{
             				if(classify[i1].toString().indexOf("企业注册号")!=-1||classify[i1].toString().indexOf("企业名称")!=-1)
             				{
             					if(classify[i1].toString().indexOf("企业名称")!=-1)
             					{   
-            						h=classify[i1].substring(classify[i1].indexOf(':')+1 );
-            						
-            						while(!tem3&&i1<classify.length-1) {
-            							i1++;
-            						for(int j=0;j<retainWord.length;j++)
-            						{	if(classify[i1].toString().indexOf(retainWord[j])!=-1)
-            						   {
-            							  tem3=true;
-            							  break;
-            						   }
+            						if(classify[i1].toString().indexOf("：")!=-1) {
+            							h=classify[i1].substring(classify[i1].indexOf("：")+1 );
+                						temp1.add(h);
+                						tem1=false;
             						}
-            						if(tem3)
-            						{
-            							tem3=false;
-            							i1--;
+            						else {
+            							h=classify[i1].substring(classify[i1].indexOf("二")+1 );
+                						temp1.add(h);
+                						tem1=false;
             						}
-            						else
-            							h=h+classify[i1];
-            						}
-            					
-            						temp1.add(h);
-            						tem1=false;
             					}
             					else
             					{
-                                  h=classify[i1].substring(classify[i1].indexOf(':')+1 );
-            						temp2.add(classify[i1]);
-            						tem2=false;
+            						if(classify[i1].toString().indexOf("：")!=-1) {
+            							h=classify[i1].substring(classify[i1].indexOf("：")+1 );
+            							temp2.add(h);
+            							tem2=false;
+            						}
+            						else {
+            							h=classify[i1].substring(classify[i1].indexOf("二")+1 );
+            							temp2.add(h);
+            							tem2=false;
+            						}
             					}
             					
             				}
             				
             			}
+            			System.out.println(result);
             			if(tem1)
             				temp1.add("none");
             			if(tem2)
             				temp2.add("none");
-            			//	System.out.println(classify[i]); 
-            			System.out.println(result);    
-            			Main.showMessage.setText(result+"\n"+"已经识别出:"+(++count)+"张");
-            		} catch (TesseractException e) {    
+            			//	System.out.println(classify[i]);     
+            			Main.showMessage.setText("已经识别出:"+(++count)+"张");
+            		} catch (Exception e) {    
             			System.err.println(e.getMessage());    
             		} 
             	}

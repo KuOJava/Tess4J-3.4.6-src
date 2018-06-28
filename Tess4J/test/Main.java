@@ -1,5 +1,6 @@
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -44,6 +45,7 @@ public class Main {
 		// '输入路径'的文本框
 		inputPath = new JTextField(1);
 		inputPath.setText("././b");
+		inputPath.setFont(new Font("宋体",Font.PLAIN, 80));
 		// 第一行第一列开始
 		c.gridx = 0;
 		c.gridy = 0;
@@ -60,6 +62,7 @@ public class Main {
 
 		// '选择路径'按钮
 		choosePath = new JButton("选择路径");
+		choosePath.setFont(new Font("宋体",Font.PLAIN, 50));
 		// 选择路径点击事件
 		choosePath.addActionListener(new ActionListener() {
 
@@ -84,6 +87,7 @@ public class Main {
 		contentPane.add(choosePath, c);
 		// '确定'按钮
 		confirm = new JButton("确定");
+		confirm.setFont(new Font("宋体",Font.PLAIN, 50));
 		// 确定按钮的点击事件
 		confirm.addActionListener(new ActionListener() {
 
@@ -127,6 +131,7 @@ public class Main {
 
 		// '识别情况:'提示框
 		situation = new JLabel("识别情况:");
+		situation.setFont(new Font("宋体",Font.PLAIN, 50));
 		c.gridx = 0;
 		c.gridy = 1;
 		c.weightx = 1;
@@ -137,6 +142,7 @@ public class Main {
 
 		// '显示消息的框'
 		showMessage = new JTextArea("");
+		showMessage.setFont(new Font("宋体",Font.PLAIN, 50));
 		showMessage.setSize(200, 200);
 		// c.gridx=0;
 		c.gridy = 2;
@@ -148,6 +154,7 @@ public class Main {
 
 		// '点击进入输出的Excel的根目录'
 		jumpToExcel = new JLabel("点击打开输出的Excel");
+		jumpToExcel.setFont(new Font("宋体",Font.PLAIN, 50));
 		//点击事件
 		c.gridx = 0;
 		c.gridy = 4;
@@ -159,6 +166,7 @@ public class Main {
 
 		// '点击复制文件'
 		clickToCopy = new JButton("打开文件");
+		clickToCopy.setFont(new Font("宋体",Font.PLAIN, 50));
 		//打开文件
 		clickToCopy.addActionListener(new ActionListener() {
 			
@@ -175,7 +183,7 @@ public class Main {
 		contentPane.add(clickToCopy, c);
 		// 显示窗口
 		f.pack();
-		f.setSize(800, 900);
+		f.setSize(1200, 900);
 		f.setVisible(true);
 	}
 
