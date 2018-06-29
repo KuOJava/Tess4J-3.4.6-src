@@ -4,20 +4,16 @@ import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Label;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
-
-import javax.security.auth.login.CredentialExpiredException;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -183,8 +179,7 @@ public class Main {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				StartExcel startexcel = new StartExcel();
-				startexcel.start();// 自动打开Excel表格
+				StartExcel.start();// 自动打开Excel表格
 			}
 		});
 		c.gridx = 3;

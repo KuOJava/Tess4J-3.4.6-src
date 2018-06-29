@@ -10,8 +10,6 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import jxl.write.Label;
-
 public class PoiExcel {
 public void poi(ArrayList<String>temp1,ArrayList<String>temp2)
 {

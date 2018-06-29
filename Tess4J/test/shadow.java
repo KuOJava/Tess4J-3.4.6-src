@@ -1,9 +1,7 @@
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
-import javax.imageio.ImageIO;
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
@@ -19,7 +17,7 @@ public class shadow {
 	
 	public String ocr(BufferedImage img) throws IOException {
 		Invert inv=new Invert();
-		img=inv.invert(img);
+		img=Invert.invert(img);
 		HoughLine HL = new HoughLine();
         img=HL.hough(img);
 		String results="";

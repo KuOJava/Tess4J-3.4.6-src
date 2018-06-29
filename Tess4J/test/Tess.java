@@ -5,19 +5,12 @@ import java.util.HashSet;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
 import LSD.LSD;
 import LSD.Line;
-import net.sourceforge.tess4j.*;
-import net.sourceforge.tess4j.util.ImageHelper;
-  
 public class Tess {  
 	 static String [] retainWord = new String[]{"企业注册号","企业名称","类型","法人","签证机关","校准时间","经营范围","成立时间","注册资本","住所"};//保留字 
      static ArrayList<String> temp1=new   ArrayList<String>();
@@ -33,7 +26,6 @@ public class Tess {
     
   /***遍历指定文件读取读取图片****/    
     public static String find(String pathName,int depth) throws IOException{  
-        int filecount=0;  
         //获取pathName的File对象  
         File dirFile = new File(pathName);  
         //判断该文件或目录是否存在，不存在时在控制台输出提醒  
@@ -188,9 +180,9 @@ public class Tess {
 //            			System.out.println(lines.size());
             			img=img.getSubimage((int)min_x1,(int)min_y11,(int)(max_x1-min_x1),(int)(y-min_y11));
             			//显示被切割的图片
-//            			JFrame jFrame = new JFrame("");
-//            			jFrame.add(new JLabel(new ImageIcon(img)));
-//            			jFrame.setVisible(true);
+            			JFrame jFrame = new JFrame("");
+            			jFrame.add(new JLabel(new ImageIcon(img)));
+            			jFrame.setVisible(true);
             		}
             		shadow shadows=new shadow();
             		try {    
